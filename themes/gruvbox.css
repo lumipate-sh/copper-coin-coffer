@@ -1,0 +1,88 @@
+
+/*
+THEME: gruvbox 
+URL: https://github.com/morhetz/gruvbox
+*/
+
+/* 
+first the light theme
+:root {
+    --bg:           #fbf1c7;
+    --bg-alt:       #ebdbb2; 
+    --fg:           #928374;
+    --fg-alt:       #a89984;
+    --box:          #bdae93;
+    --head-high:    #9d0006;
+    --head-med:     #af3a03;
+    --head-low:     #b57614;
+    --text:         #3c3836;
+    --text-strong:  #98971a;
+    --text-weak:    #7c6f64;
+    --interact:     #427b58;
+    --interact-alt: #689d6a;
+    --important:    #cc241d;
+    --pop:          #8f3f71;
+    --accent:       #;
+}
+
+then the dark theme
+[data-theme="dark"] {
+    --bg:           #282828; bg
+    --bg-alt:       #3c3836; bg1
+    --fg:           #928374; gray
+    --fg-alt:       #7c6f64; bg4
+    --box:          #665c54; bg3
+    --head-high:    #cc241d; red
+    --head-med:     #d65d0e; orange
+    --head-low:     #d79921; yellow
+    --text:         #ebdbb2; fg
+    --text-strong:  #98971a; green
+    --text-weak:    #a89984; gray
+    --interact:     #689d6a; aqua
+    --interact-alt: #8ec07c; aqua
+    --important:    #fb4934; red
+    --pop:          #d38690; purple
+    --accent:       #d79921; yellow
+}
+*/
+
+
+:root {
+    --bg:           #fbf1c7;
+    --bg-alt:       #ebdbb2; 
+    --fg:           #928374;
+    --fg-alt:       #a89984;
+    --box:          #bdae93;
+    --head-high:    #689d6a;
+    --head-med:     #427b58;
+    --head-low:     #98971a;
+    --text:         #3c3836;
+    --text-strong:  #b57614;
+    --text-weak:    #7c6f64;
+    --interact:     #689d6a;/*#9d0006;*/
+    --interact-alt: #427b58;/*#af3a03;*/
+    --important:    #cc241d;
+    --pop:          #8f3f71;
+    --accent:       #d79921;
+}
+
+[data-theme="dark"] {
+    --bg:           #3c3836;
+    --bg-alt:       #282828;
+    --fg:           #928374;
+    --fg-alt:       #7c6f64;
+    --box:          #665c54;
+    --head-high:    #8ec07c;
+    --head-med:     #689d6a;
+    --head-low:     #98971a;
+    --text:         #ebdbb2;
+    --text-strong:  #d79921;
+    --text-weak:    #a89984;
+    --interact:     #689d6a;/*#d65d0e;*/
+    --interact-alt: #8ec07c;/*#cc241d;*/
+    --important:    #fb4934;
+    --pop:          #d38690;
+    --accent:       #d79921;
+}
+
+

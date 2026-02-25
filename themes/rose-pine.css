@@ -1,0 +1,44 @@
+/*
+THEME: ROSÉ PINE
+https://github.com/rose-pine/rose-pine-palette/
+*/
+
+
+
+:root {
+    --bg:           #faf4ed;
+    --bg-alt:       #cecacd;
+    --fg:           #9893a5;
+    --fg-alt:       #797593;
+    --box:          #56526e;
+    --head-high:    #b4637a;
+    --head-med:     #d7827e;
+    --head-low:     #ea9a97;
+    --text:         #575279;
+    --text-strong:  #907aa9;
+    --text-weak:    #797593;
+    --interact:     #3e8fb0;
+    --interact-alt: #56949f;
+    --important:    #b4637a;
+    --pop:          #ea9d34;
+    --accent:       #907aa9;
+}
+
+[data-theme="dark"] {
+    --bg:           #232136;
+    --bg-alt:       #2a273f;
+    --fg:           #56526e;
+    --fg-alt:       #6e6a86;
+    --box:          #9893a5;
+    --head-high:    #eb6f92;
+    --head-med:     #ea9a97;
+    --head-low:     #ebbcba;
+    --text:         #e0def4;
+    --text-strong:  #c4a7e7;
+    --text-weak:    #908caa;
+    --interact:     #56949f;
+    --interact-alt: #9ccfd8;
+    --important:    #eb6f92;
+    --pop:          #f6c177;
+    --accent:       #c4a7e7;
+}

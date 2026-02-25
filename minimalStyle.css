@@ -1,0 +1,623 @@
+@import url('./themes/gruvbox.css');
+
+/* FONTS */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #282828;
+    --bg-alt: #3c3836;
+    --fg: #928374;
+    --fg-alt: #7c6f64;
+    --box: #665c54;
+    --head-high: #8ec07c;
+    --head-med: #689d6a;
+    --head-low: #98971a;
+    --text: #ebdbb2;
+    --text-strong: #d79921;
+    --text-weak: #a89984;
+    --interact: #689d6a;
+    --interact-alt: #8ec07c;
+    --important: #fb4934;
+    --pop: #d38690;
+    --accent: #d79921;
+}
+
+body {
+    font-family: 'Overpass', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    font-size: 20px;
+    background-color: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 1em;
+    line-height: 1.5;
+}
+
+.container {
+    max-width: 48em;
+    margin: 0 auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.2em;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+}
+
+h1, h2, h3 {
+    font-family: 'Press Start 2P', cursive;
+}
+
+h1 {
+    font-size: 1.4em;
+    color: var(--text-strong);
+    font-weight: 600;
+    margin: 0;
+}
+
+h2 {
+    font-size: 1em;
+    color: var(--text);
+    margin-bottom: 0.8em;
+    font-weight: 500;
+}
+
+h3 {
+    font-size: 0.7em;
+    color: var(--text-weak);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.4em;
+}
+
+nav {
+    display: flex;
+    gap: 0.6em;
+}
+
+nav button {
+    background-color: var(--bg-alt);
+    color: var(--text);
+    border: 3px solid var(--box);
+
+    padding: 0.5em 1em;
+    /* border-radius: 0.3em; */
+    cursor: pointer;
+    font-size: 1em;
+    transition: all 0.2s ease;
+}
+
+nav button:hover {
+    border-color: var(--interact);
+}
+
+#btn-demo-mode {
+    background-color: var(--bg);
+    color: var(--pop);
+    padding: 0.5em 1em;
+    border: 3px solid var(--box);
+    /* border-radius: 0.3em; */
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+#btn-demo-mode:hover {
+    background-color: var(--pop);
+    color: var(--bg);
+
+    transition: all 0.2s ease;
+}
+
+nav button:hover {
+    border-color: var(--interact);
+}
+
+nav button:active {
+    background-color: var(--interact);
+    color: var(--bg);
+}
+
+#welcome-user {
+    color: var(--text-weak);
+    font-size: 0.8em;
+    margin-bottom: 1.2em;
+}
+
+#new-transaction-area {
+    margin-bottom: 1.6em;
+}
+
+#btn-add-expense,
+#btn-add-income {
+    background-color: var(--bg-alt);
+    color: var(--text);
+    border: 4px solid var(--box);
+    padding: 0.6em 1.2em;
+    /* border-radius: 0.3em; */
+    cursor: pointer;
+    font-size: 1em;
+    transition: all 0.2s ease;
+    margin-right: 0.6em;
+    text-transform: uppercase;
+}
+
+#btn-add-expense:hover,
+#btn-add-income:hover {
+    border-color: var(--interact);
+}
+
+#btn-add-expense:active,
+#btn-add-income:active {
+    background-color: var(--interact);
+    color: var(--bg);
+}
+
+#dashboard-section {
+    margin-bottom: 1.6em;
+}
+
+#current-balance-box,
+#month-expenses-box {
+    background-color: var(--bg-alt);
+    border: 1px solid var(--box);
+    /* border-radius: 0.4em; */
+    padding: 1em;
+    margin-bottom: 0.8em;
+    display: inline-block;
+    min-width: 10em;
+    margin-right: 0.8em;
+}
+
+#current-balance-box h3,
+#month-expenses-box h3,
+#current-balance-box[style*="INCOME"] h3 {
+    color: var(--text-weak);
+    font-size: 0.6em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.4em;
+}
+
+#current-balance-box output,
+#month-expenses-box output {
+    display: block;
+    font-size: 1.4em;
+    font-weight: 600;
+    color: var(--text);
+}
+
+#month-income-box {
+    background-color: var(--bg-alt);
+    border: 1px solid var(--box);
+    /* border-radius: 0.4em; */
+    padding: 1em;
+    margin-bottom: 0.8em;
+    display: inline-block;
+    min-width: 10em;
+}
+
+#month-income-box h3 {
+    color: var(--text-weak);
+    font-size: 0.6em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.4em;
+}
+
+#month-income-box output {
+    display: block;
+    font-size: 1.4em;
+    font-weight: 600;
+    color: var(--text);
+}
+
+#transaction-history {
+    margin-bottom: 1.6em;
+}
+
+#btn-filter {
+    background-color: var(--bg-alt);
+    color: var(--text);
+    border: 1px solid var(--box);
+    padding: 0.4em 0.8em;
+    /* border-radius: 0.3em; */
+    cursor: pointer;
+    font-size: 0.7em;
+    margin-bottom: 0.8em;
+    transition: all 0.2s ease;
+}
+
+#btn-filter:hover {
+    background-color: var(--box);
+    border-color: var(--interact);
+}
+
+#filter-dropdown {
+    background-color: var(--bg-alt);
+    border: 1px solid var(--box);
+    /* border-radius: 0.4em; */
+    padding: 0.8em;
+    margin-bottom: 0.8em;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8em;
+    align-items: flex-end;
+}
+
+#filter-dropdown label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+    font-size: 0.6em;
+    color: var(--text-weak);
+}
+
+#filter-dropdown select,
+#filter-dropdown input {
+    background-color: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--box);
+    padding: 0.4em 0.6em;
+    /* border-radius: 0.2em; */
+    font-size: 0.7em;
+    min-width: 7em;
+}
+
+#filter-dropdown select:focus,
+#filter-dropdown input:focus {
+    outline: none;
+    border-color: var(--interact);
+}
+
+#btn-apply-filters,
+#btn-clear-filters {
+    background-color: var(--interact);
+    color: var(--bg);
+    border: none;
+    padding: 0.4em 0.8em;
+    /* border-radius: 0.3em; */
+    cursor: pointer;
+    font-size: 0.7em;
+    transition: all 0.2s ease;
+}
+
+#btn-apply-filters:hover,
+#btn-clear-filters:hover {
+    background-color: var(--interact-alt);
+}
+
+#btn-clear-filters {
+    background-color: var(--box);
+    color: var(--text);
+}
+
+#btn-clear-filters:hover {
+    background-color: var(--fg);
+}
+
+#latest-transactions-dashboard,
+#transaction-history-list {
+    list-style: none;
+    background-color: var(--bg-alt);
+    border: 1px solid var(--box);
+    /* border-radius: 0.4em; */
+    overflow: hidden;
+}
+
+#latest-transactions-dashboard li,
+#transaction-history-list li {
+    padding: 0.6em 0.8em;
+    border-bottom: 1px solid var(--box);
+    display: flex;
+    align-items: center;
+    font-size: 1em;
+}
+
+#latest-transactions-dashboard li.transaction-header,
+#transaction-history-list li.transaction-header {
+    font-weight: bold;
+    background-color: var(--bg);
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
+.col-date {
+    width: 12%;
+    flex-shrink: 0;
+}
+
+.col-amount {
+    width: 14%;
+    flex-shrink: 0;
+    text-align: right;
+    padding: 0 0.5em;
+    font-weight: bold;
+}
+
+.amount-income {
+    color: var(--head-high);
+}
+
+.amount-expense {
+    color: var(--pop);
+}
+
+.col-desc {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0 0.5em;
+}
+
+.col-category {
+    width: 18%;
+    flex-shrink: 0;
+    padding: 0 0.5em;
+}
+
+.col-actions {
+    width: 8%;
+    flex-shrink: 0;
+    text-align: right;
+}
+
+#latest-transactions-dashboard li:last-child,
+#transaction-history-list li:last-child {
+    border-bottom: none;
+}
+
+#latest-transactions-dashboard li:hover,
+#transaction-history-list li:hover {
+    background-color: var(--box);
+}
+
+#btn-load-more {
+    background-color: var(--bg-alt);
+    color: var(--text);
+    border: 1px solid var(--box);
+    padding: 0.6em 1.2em;
+    /* border-radius: 0.3em; */
+    cursor: pointer;
+    font-size: 0.7em;
+    margin-top: 0.8em;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    transition: all 0.2s ease;
+}
+
+#btn-load-more:hover {
+    background-color: var(--box);
+    border-color: var(--interact);
+}
+
+#delete-all-data {
+    background-color: transparent;
+    color: var(--important);
+    border: 1px solid var(--important);
+    padding: 0.6em 1.2em;
+    /* border-radius: 0.3em; */
+    cursor: pointer;
+    font-size: 0.7em;
+    transition: all 0.2s ease;
+}
+
+#delete-all-data:hover {
+    background-color: var(--important);
+    color: var(--bg);
+    font-weight: 900;
+    font-size: 1em;
+    /* height: 4rem; */
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+    background-color: var(--bg-alt);
+    margin: 10% auto;
+    padding: 1.2em;
+    border: 1px solid var(--box);
+    /* border-radius: 0.4em; */
+    width: 90%;
+    max-width: 22.5em;
+    color: var(--text);
+}
+
+.modal-close {
+    color: var(--text-weak);
+    float: right;
+    font-size: 1.4em;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.modal-close:hover,
+.modal-close:focus {
+    color: var(--text);
+}
+
+#modal-title {
+    margin-bottom: 1em;
+    padding-right: 1.5em;
+}
+
+#new-trans-form fieldset {
+    border: 1px solid var(--box);
+    /* border-radius: 0.3em; */
+    padding: 0.6em;
+    margin-bottom: 0.8em;
+    background-color: var(--bg);
+}
+
+#new-trans-form legend {
+    color: var(--text-weak);
+    font-size: 0.6em;
+    padding: 0 0.4em;
+}
+
+#new-trans-form input[type="text"],
+#new-trans-form input[type="number"],
+#new-trans-form input[type="date"] {
+    width: 100%;
+    padding: 0.5em 0.6em;
+    background-color: var(--bg-alt);
+    color: var(--text);
+    border: 1px solid var(--box);
+    /* border-radius: 0.2em; */
+    font-size: 0.7em;
+}
+
+#new-trans-form input:focus {
+    outline: none;
+    border-color: var(--interact);
+}
+
+#new-trans-form input::placeholder {
+    color: var(--fg-alt);
+}
+
+#category-fieldset {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4em;
+}
+
+#category-fieldset legend {
+    width: 100%;
+    margin-bottom: 0.4em;
+}
+
+#category-fieldset input[type="radio"] {
+    display: none;
+}
+
+#category-fieldset label {
+    background-color: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--box);
+    padding: 0.4em 0.7em;
+    /* border-radius: 0.2em; */
+    cursor: pointer;
+    font-size: 0.65em;
+    transition: all 0.2s ease;
+}
+
+#category-fieldset input[type="radio"]:checked + label {
+    background-color: var(--interact);
+    color: var(--bg);
+    border-color: var(--interact);
+}
+
+#category-fieldset label:hover {
+    border-color: var(--interact);
+}
+
+#new-trans-form p {
+    color: var(--text-weak);
+    font-size: 0.6em;
+    margin-top: 0.3em;
+}
+
+#new-trans-submit {
+    background-color: var(--interact);
+    color: var(--bg);
+    border: none;
+    padding: 0.6em 1.2em;
+    /* border-radius: 0.3em; */
+    cursor: pointer;
+    font-size: 0.7em;
+    font-weight: 500;
+    width: 100%;
+    margin-bottom: 0.6em;
+    transition: all 0.2s ease;
+}
+
+#new-trans-submit:hover {
+    background-color: var(--interact-alt);
+}
+
+#btn-cancel {
+    background-color: transparent;
+    color: var(--text-weak);
+    border: 1px solid var(--box);
+    padding: 0.6em 1.2em;
+    /* border-radius: 0.3em; */
+    cursor: pointer;
+    font-size: 0.7em;
+    width: 100%;
+    transition: all 0.2s ease;
+}
+
+#btn-cancel:hover {
+    background-color: var(--box);
+    color: var(--text);
+}
+
+button[title="Delete transaction"] {
+    background-color: transparent;
+    border: none;
+    color: var(--text-weak);
+    cursor: pointer;
+    font-size: 1em;
+    padding: 0.2em 0.4em;
+    /* border-radius: 0.2em; */
+    transition: all 0.2s ease;
+}
+
+button[title="Delete transaction"]:hover {
+    background-color: var(--important);
+    color: var(--bg);
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.8);
+    cursor: pointer;
+}
+
+select {
+    background-color: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--box);
+    padding: 0.4em 0.6em;
+    /* border-radius: 0.2em; */
+    font-size: 0.7em;
+    cursor: pointer;
+}
+
+select:focus {
+    outline: none;
+    border-color: var(--interact);
+}
+
+output {
+    color: var(--text);
+    font-weight: 600;
+}

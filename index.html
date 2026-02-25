@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>COIN COFFER</title>
+    <link rel="icon" type="image/icon" href="./favicon.ico">
+    <!-- quick fix for false error in console -->
+    <link rel="shortcut icon" href="#">
+    <link href="./minimalStyle.css" rel="stylesheet">
+    <!-- <link href="./style.css" rel="stylesheet"> -->
+    <!-- <script type="module" src="./app.js"></script> -->
+    <script type="module" src="./app.js" defer></script>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Coin Coffer</h1>
+
+            <div class="header-right">
+                <button id="btn-demo-mode">DEMO MODE</button>
+                <nav>
+                    <button id="btn-show-dashboard">Dashboard</button>
+                    <button id="btn-show-history">Transaction History</button>
+                </nav>
+            </div>
+        </div>
+
+
+        <h2 id="welcome-user">Welcome back</h2>
+
+        <section id="new-transaction-area">
+        <button id="btn-add-expense">Add Expense</button>
+        <button id="btn-add-income">Add Income</button>
+
+        <div id="transaction-modal" class="modal">
+            <div class="modal-content">
+                <span class="modal-close">&times;</span>
+                <h2 id="modal-title">Add Transaction</h2>
+                <form id="new-trans-form">
+                    <input type="hidden" name="type" id="trans-type" value="" />
+                    
+                    <fieldset>
+                        <legend>what</legend>
+                        <input type="text" name="description" id="new-trans-description" placeholder="description" required />
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>how much</legend>
+                        <input type="number" name="currencyValue" id="new-trans-value" placeholder="19.99" required />
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>when</legend>
+                        <input type="date" name="date" id="new-trans-date" />
+                        <p>if today, leave empty</p>
+                    </fieldset>
+
+                    <fieldset id="category-fieldset">
+                        <legend>category</legend>
+                    </fieldset>
+
+                    <button type="submit" id="new-trans-submit">Add Transaction</button>
+                    <button type="button" id="btn-cancel">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section id="dashboard-section">
+        <h2>DASHBOARD</h2>
+
+        <div id="current-balance-box">
+            <h3>CURRENT BALANCE</h3>
+            <output> <span id="current-balance"></span>€</output>
+        </div>
+
+        <div id="month-expenses-box">
+            <h3>EXPENSES THIS MONTH</h3>
+            <output><span id="month-expenses">1000</span>€</output>
+            <!-- <output>-><span id="relative-diff-month-expenses">+5</span>% vs last month</output> -->
+        </div>
+
+        <div id="current-balance-box">
+            <h3>INCOME THIS MONTH</h3>
+            <output> <span id="month-income">2000</span>€</output>
+            <!-- <output>-> <span id="relative-diff-month-income">+5</span>% vs last month</output> -->
+        </div>
+
+        <h3>LATEST TRANSACTIONS</h3>
+        <ul id="latest-transactions-dashboard">
+        </ul>
+    </section>
+
+    <section id="transaction-history" style="display: none;">
+        <h2>Transaction History</h2>
+        <button id="btn-filter">Filter List</button>
+        
+        <div id="filter-dropdown" style="display: none;">
+            <label>
+                Type:
+                <select id="filter-type">
+                    <option value="all">All</option>
+                    <option value="expense">Expense</option>
+                    <option value="income">Income</option>
+                </select>
+            </label>
+            <label>
+                Category:
+                <select id="filter-category">
+                    <option value="all">All</option>
+                </select>
+            </label>
+            <label>
+                From:
+                <input type="date" id="filter-date-from" />
+            </label>
+            <label>
+                Until:
+                <input type="date" id="filter-date-until" />
+            </label>
+            <button id="btn-apply-filters">Apply Filters</button>
+            <button id="btn-clear-filters">Clear Filters</button>
+        </div>
+
+        <ul id="transaction-history-list"></ul>
+        <button id="btn-load-more" style="display: none;">Load More</button>
+    </section>
+
+    <button id="delete-all-data">🚨 DELETE ALL DATA 🚨</button>
+    </div>
+</body>
+
+</html>
