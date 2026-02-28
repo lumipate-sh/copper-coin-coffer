@@ -1,20 +1,33 @@
+// IMPORTS FROM MODULES 
+
+// state stores all the current values that are subject to change 
+// import .. from './modules/state'
+
+
+// localStorageUtils handles all reads and writes to and from memory
 import {
     memorySetup,
     storeInMem,
     loadFromMem,
     pushToListInMem,
-    readLastFromListInMem,
+    readRecentFromListInMem,
     deleteAllData,
     removeFromTransactionHistory
-} from "./modules/storage.js"
+} from "./modules/localStorageUtils.js"
 
+// transactionUtils handles all handling of data
 import {
     createNewTransaction,
     calcBalance,
-} from "./modules/transactions.js"
+    normalizeDate,
+    isValidTrans_Iterative,
+} from "./modules/transactionUtils.js"
 
+// dummyData is test data that can be used to test and experiment with the app
 import { storeDummyData } from "./dummyData.js"
+import type { TransactionSchema, UserDataSchema } from "./modules/interfaces.js"
 
+// userInterfaceUtils handles all changes to the user interface in the webapp
 import {
     eventsUI,
     informationPopup,
@@ -36,25 +49,25 @@ import {
     getFilterValues,
     applyFiltersToList,
     clearFilters,
-} from "./modules/userIterface.js"
+} from "./modules/userInterfaceUtils.js"
 
 // CONSTANTS
 
-let EXPENSE_CATEGORIES = [];
-let INCOME_CATEGORIES = [];
+let expenseCategoriesInMem: string[] = [];
+let incomeCategoriesInMem: string[] = [];
 
 // ON OPEN APP
 function loadApp() {
     console.clear()
     console.log('=== COIN COFFER ===\n - personal finance manager - ')
 
-    if (localStorage.length === 0) {firstUseSetup()}
-        
-     
-    
+    if (localStorage.length === 0) { firstUseSetup() }
+
+
+
     // LOAD SOME INFO FROM MEM
-    const USER_DATA=loadFromMem("userData")
-    const TRANSACTION_LIST = loadFromMem('transactionHistory')
+    const USER_DATA = loadFromMem("userData") as UserDataSchema
+    const TRANSACTION_LIST = loadFromMem('transactionHistory') as TransactionSchema[]
 
     const USER_NAME = USER_DATA.userName
     console.log(`user name saved in memory:${USER_NAME}`)
@@ -64,18 +77,18 @@ function loadApp() {
 
     const STARTING_BALANCE = USER_DATA.startingBalance
 
-    const CURRENT_BALANCE = calcBalance(TRANSACTION_LIST)+STARTING_BALANCE
+    const CURRENT_BALANCE = calcBalance(TRANSACTION_LIST) + STARTING_BALANCE
 
     console.log('--> CURRENT BALANCE: ', CURRENT_BALANCE)
     showCurrentBalance(CURRENT_BALANCE.toFixed(2))
 
     showMonthDashboard(TRANSACTION_LIST)
 
-    EXPENSE_CATEGORIES = loadFromMem('expenseCategories') || []
-    INCOME_CATEGORIES = loadFromMem('incomeCategories') || []
+    expenseCategoriesInMem = (loadFromMem('expenseCategories') as string[]) || []
+    incomeCategoriesInMem = (loadFromMem('incomeCategories') as string[]) || []
 
 
-    const DASH_TRANSACTION_LIST = readLastFromListInMem('transactionHistory', 10);
+    const DASH_TRANSACTION_LIST = readRecentFromListInMem('transactionHistory', 10) as TransactionSchema[];
 
     listLatestTransactions(DASH_TRANSACTION_LIST, 10, handleDeleteTransaction);
 
@@ -85,7 +98,7 @@ function loadApp() {
     return
 }
 
-function firstUseSetup(){
+function firstUseSetup() {
     console.log('Memory is empty.\nWelcoming user for the first time.')
     informationPopup('Welcome to Coin Coffer!\nThis is a simple personal financing app');
 
@@ -93,8 +106,8 @@ function firstUseSetup(){
 
     if (inputName === null || inputName === '') {
         inputName = 'User';
-    }  
-    
+    }
+
     console.log('asking starting balance value')
     let startingBalanceInput = getNumberInput(
         "What is your account's starting balance?",
@@ -106,7 +119,7 @@ function firstUseSetup(){
 // SOME UTILITIES ---------------------------
 
 //make printing to console more visible, wastes space but helps debugging
-function log(printThis) {
+function log(printThis: any): void {
     console.log('\n', printThis, '\n\n')
 }
 // HANDLE EVENTS FUNCTIONS
@@ -115,27 +128,42 @@ function handleNewTrans() {
     log('-> HANDLING NEW TRANSACTION')
 
     log('retrieving new trans from user input: ')
-    let rawTransaction = getTransactionFromUser()
+    const rawTransaction = getTransactionFromUser()
     log(rawTransaction)
 
     log('consulting last ID, generating new one, giving it to new transaction:');
-    let transactionMetadata = loadFromMem('transactionMetadata')
+    const transactionMetadata = loadFromMem('transactionMetadata') as { lastTransactionID: number; nrTransactionsDeleted: number }
     const newTransID = transactionMetadata.lastTransactionID + 1
     log(newTransID)
 
-    const transactionWithID = { ...rawTransaction, id: newTransID }
+    log('normalizing transaction date:')
+    const normalizedDate = normalizeDate(rawTransaction.date)
+    log(normalizedDate)
 
-    log('validating and formatting transaction:')
-    const validatedTransaction = createNewTransaction(transactionWithID)
-    if (!validatedTransaction) {
+    const preTransaction: TransactionSchema = { 
+        description: rawTransaction.description,
+        type: rawTransaction.type as 'income' | 'expense',
+        category: rawTransaction.category,
+        value: Number(rawTransaction.value),
+        date: normalizedDate,
+        id: newTransID
+    }
+
+    log('validating transaction:')
+    if (!isValidTrans_Iterative(preTransaction)) {
+        informationPopup('ERROR: INVALID TRANSACTION\nInsert valid data')
         log('Transaction validation failed')
         return
     }
+
+    log('creating transaction:')
+    const validatedTransaction = createNewTransaction(preTransaction)
     log(validatedTransaction)
 
     log('storing new transaction in memory')
+
     pushToListInMem("transactionHistory", validatedTransaction)
-    log('transaction history', loadFromMem('transactionHistory'))
+
 
     log('updating transaction metadata: ')
     transactionMetadata.lastTransactionID = newTransID;
@@ -160,54 +188,54 @@ function handleDeleteAllData() {
     return
 }
 
-function handleOpenModal(type) {
-    const categories = type === 'expense' ? EXPENSE_CATEGORIES : INCOME_CATEGORIES;
+function handleOpenModal(type: 'expense' | 'income') {
+    const categories = type === 'expense' ? expenseCategoriesInMem : incomeCategoriesInMem;
     openTransactionModal(type, categories);
 }
 
-function handleDeleteTransaction(transactionId) {
+function handleDeleteTransaction(transactionId: number) {
     console.log('-> HANDLING DELETE TRANSACTION', transactionId);
-    
+
     const confirmed = confirmAlert('Delete this transaction?');
     if (!confirmed) return;
 
     removeFromTransactionHistory(transactionId);
-    
+
     loadApp()
 }
 
-function handleSwitchSection(sectionName) {
+function handleSwitchSection(sectionName: string) {
     switchSection(sectionName);
-    
+
     if (sectionName === 'history') {
-        populateCategoryFilter(EXPENSE_CATEGORIES, INCOME_CATEGORIES);
-        const TRANSACTION_LIST = loadFromMem('transactionHistory');
+        populateCategoryFilter(expenseCategoriesInMem, incomeCategoriesInMem);
+        const TRANSACTION_LIST = loadFromMem('transactionHistory') as TransactionSchema[];
         showTransactionHistory(TRANSACTION_LIST, false, handleDeleteTransaction);
     }
 }
 
 function handleLoadMore() {
-    const TRANSACTION_LIST = loadFromMem('transactionHistory');
+    const TRANSACTION_LIST = loadFromMem('transactionHistory') as TransactionSchema[];
     showTransactionHistory(TRANSACTION_LIST, true, handleDeleteTransaction);
 }
 
 function handleApplyFilters() {
     const filters = getFilterValues();
-    const allTransactions = loadFromMem('transactionHistory');
+    const allTransactions = loadFromMem('transactionHistory') as TransactionSchema[];
     const filteredTransactions = applyFiltersToList(allTransactions, filters);
     showTransactionHistory(filteredTransactions, false, handleDeleteTransaction);
 }
 
 function handleClearFilters() {
     clearFilters();
-    const TRANSACTION_LIST = loadFromMem('transactionHistory');
+    const TRANSACTION_LIST = loadFromMem('transactionHistory') as TransactionSchema[];
     showTransactionHistory(TRANSACTION_LIST, false, handleDeleteTransaction);
 }
 
 function handleDemoMode() {
     const confirmed = confirmAlert('This will load 50 example transactions so you can experiment with the app features. Continue?');
     if (!confirmed) return;
-    
+
     storeDummyData();
     loadApp();
 }
@@ -226,6 +254,6 @@ eventsUI({
     onDemoMode: handleDemoMode,
 })
 
-
+// RUN
 loadApp()
 

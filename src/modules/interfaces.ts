@@ -1,0 +1,30 @@
+// interfaces
+
+
+
+export interface TransactionSchema {
+    id: number;
+    description: string;
+    type: 'income' | 'expense';
+    category: string; // ideally i could barr any value that is not in the category arrays but because they are dynamic that might not be possible
+    value: number;
+    date: Date;
+}
+
+export interface MonthRecordSchema {
+    month: number;
+    year: number;
+    startingBalance: number;
+    endingbalance: number;
+    totalIncome: number;
+    totalExpense: number;
+    numberOfTransactions: number;
+    transactionList: TransactionSchema[];
+};
+
+
+export interface UserDataSchema {
+    userName: string,
+    firstUseDate: Date,
+    startingBalance: number
+}

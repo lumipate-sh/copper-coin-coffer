@@ -1,16 +1,12 @@
-import { storeInMem } from "./modules/storage.js"
-
-const today = new Date('2026-02-16')
-
+import { storeInMem } from "./modules/localStorageUtils.js";
+const today = new Date('2026-02-16');
 function getRandomDate(daysBack) {
-    const date = new Date(today)
-    date.setDate(date.getDate() - Math.floor(Math.random() * daysBack))
-    return date
+    const date = new Date(today);
+    date.setDate(date.getDate() - Math.floor(Math.random() * daysBack));
+    return date;
 }
-
-const randomDates = Array.from({ length: 50 }, () => getRandomDate(30))
-randomDates.sort((a, b) => a.getTime() - b.getTime())
-
+const randomDates = Array.from({ length: 50 }, () => getRandomDate(30));
+randomDates.sort((a, b) => a.getTime() - b.getTime());
 const transactions = [
     { id: 1, description: 'Monthly salary', type: 'income', category: 'Salary', value: 2500.00, date: randomDates[0] },
     { id: 2, description: 'Grocery shopping', type: 'expense', category: 'Groceries', value: 85.50, date: randomDates[1] },
@@ -62,16 +58,14 @@ const transactions = [
     { id: 48, description: 'Selling books', type: 'income', category: 'Selling', value: 45.00, date: randomDates[47] },
     { id: 49, description: 'Spare parts', type: 'expense', category: 'Vehicle', value: 40.00, date: randomDates[48] },
     { id: 50, description: 'Miscellaneous', type: 'expense', category: 'Others', value: 20.00, date: randomDates[49] },
-]
-
+];
 const transactionMetadata = {
     lastTransactionID: 50,
     nrTransactionsDeleted: 0,
+};
+export function storeDummyData() {
+    storeInMem('transactionHistory', transactions);
+    storeInMem('transactionMetadata', transactionMetadata);
+    console.log('Dummy data saved to localStorage');
 }
-
-export function storeDummyData(){
-    storeInMem('transactionHistory', transactions)
-    storeInMem('transactionMetadata', transactionMetadata)
-
-    console.log('Dummy data saved to localStorage')
-}
+//# sourceMappingURL=dummyData.js.map
