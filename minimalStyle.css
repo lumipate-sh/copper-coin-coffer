@@ -264,7 +264,7 @@ nav button:active {
     display: flex;
     flex-direction: column;
     gap: 0.3em;
-    font-size: 0.6em;
+    font-size: 1.3em;
     color: var(--text-weak);
 }
 

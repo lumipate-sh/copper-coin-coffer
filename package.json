@@ -1,3 +1,21 @@
 {
-    "type": "module"
+    "type": "module",
+    "name": "copper-coin-coffer",
+    "version": "1.0.0",
+    "description": "This is an updated version of [Coin Coffer](https://github.com/lumipate-sh/coin-coffer), a simple personal finance and transaction record app, refactored from javascript to typescript.",
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/lumipate-sh/copper-coin-coffer.git"
+    },
+    "keywords": [],
+    "author": "lumipate",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/lumipate-sh/copper-coin-coffer/issues"
+    },
+    "homepage": "https://github.com/lumipate-sh/copper-coin-coffer#readme"
 }
